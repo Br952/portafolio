@@ -24,11 +24,11 @@ const server = await preview({ preview: { port: PORT, strictPort: true }, logLev
 const url = `http://127.0.0.1:${PORT}/`;
 const browser = await chromium.launch();
 
-async function capture({ name, width, height, section, element = false }) {
+async function capture({ name, width, height, section, element = false, path = '' }) {
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
 
   try {
-    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.goto(`${url}${path}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     // El skip link solo se ve con foco de teclado; en una captura de marketing
     // distrae, así que se oculta solo durante la sesión de Playwright.
@@ -83,6 +83,12 @@ try {
     element: true,
   });
   await capture({ name: 'hero-mobile', width: 390, height: 844 });
+  await capture({
+    name: 'case-study-desktop',
+    width: 1440,
+    height: 1000,
+    path: '#/proyectos/monitoreo-sismico',
+  });
   await capture({
     name: 'projects-mobile',
     width: 390,

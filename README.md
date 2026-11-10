@@ -43,7 +43,7 @@ salen de trabajo real.
 
 - **React 19 + Vite 8**, sin TypeScript.
 - **Tailwind CSS v4** con tokens de marca en `src/styles/tokens.css`.
-- **Playwright + axe-core**: 86 pruebas E2E en desktop y mobile, cero
+- **Playwright + axe-core**: 106 pruebas E2E en desktop y mobile, cero
   violaciones de accesibilidad.
 - **Presupuesto de rendimiento** que falla el build si el bundle o las
   métricas se degradan.
@@ -95,13 +95,27 @@ Decisiones que explican los números:
   umbral. En CI se ejecuta `npm run test:budget`, que valida el peso del
   bundle sin depender de la latencia del runner.
 
-## Proyecto destacado
+## Caso de estudio: monitor sísmico
 
-La tarjeta principal muestra una captura real del monitor sísmico construido
-en FUNVISIS: mapa Leaflet, estaciones, fallas, eventos y el asistente ROBER.
-La imagen vive en `public/projects/monitoreo-sismico.png` y se carga con
-`loading="lazy"`. Si cambias la captura, conserva el nombre y vuelve a
-ejecutar `npm run screenshots`.
+El proyecto destacado tiene una vista propia en
+`#/proyectos/monitoreo-sismico`, enlazada desde la tarjeta. Documenta el
+problema real de FUNVISIS, el rol, la solución (mapa Leaflet, 45 estaciones,
+histórico, capas COVENIN, tsunami, reportes Excel y ROBER), la arquitectura
+cliente/servidor, cuatro decisiones con su coste y los resultados.
+
+La ruta se resuelve con `useHashRoute` —sin router externo— y actualiza
+`document.title` y la meta descripción al navegar. El contenido vive en
+`src/data/caseStudies.js`; la vista, en
+`src/components/case-study/SeismicCaseStudy.jsx`.
+
+El monitor real es Vanilla JS + Leaflet + Node/Express, no React: la etiqueta
+del proyecto en el portafolio lo refleja.
+
+![Caso de estudio del monitor sísmico](docs/screenshots/case-study-desktop.png)
+
+La captura del panel vive en `public/projects/monitoreo-sismico.png` y se carga
+con `loading="lazy"` en la tarjeta. Si cambias la captura, conserva el nombre y
+vuelve a ejecutar `npm run screenshots`.
 
 ![Sección de proyectos](docs/screenshots/projects-desktop.png)
 
@@ -149,13 +163,15 @@ src/
 ├─ components/
 │  ├─ layout/         Navbar, MobileMenu, Footer, SkipLink
 │  ├─ sections/       Hero, Stack, Projects, Contact
+│  ├─ case-study/     SeismicCaseStudy (vista #/proyectos/monitoreo-sismico)
 │  ├─ ui/             Button, Badge, StatusPill, GlassPanel, BentoGrid,
 │  │                  SectionHeading, SpotlightCard, CodeWindow
 │  └─ motion/         Reveal (IntersectionObserver)
 ├─ config/            site.js (re-exporta site.config.js), motion.js
-├─ data/              nav.js, metrics.js, skills.js, projects.js
-├─ hooks/             useScrolled, useScrollProgress, useScrollSpy,
-│                     useMediaQuery, useReducedMotion, useLockBodyScroll
+├─ data/              nav.js, metrics.js, skills.js, projects.js, caseStudies.js
+├─ hooks/             useHashRoute, useScrolled, useScrollProgress,
+│                     useScrollSpy, useMediaQuery, useReducedMotion,
+│                     useLockBodyScroll
 ├─ lib/               cn.js, contact.js (validación + envío), asset.js
 └─ styles/            tokens.css, fonts.css, globals.css, utilities.css
 ```
@@ -171,7 +187,8 @@ Alimenta a la app, al HTML (`canonical`, Open Graph, Twitter Card, JSON-LD) y
 a `/sitemap.xml` y `/robots.txt`, que se generan en build desde el mismo
 dominio. No hay metadatos duplicados en `index.html` que puedan desfasarse.
 
-- `src/data/skills.js`, `projects.js` y `metrics.js`: contenido editable.
+- `src/data/skills.js`, `projects.js`, `metrics.js` y `caseStudies.js`:
+  contenido editable.
 - `src/data/metrics.js` solo contiene cifras medidas y defendibles.
 
 El workflow de despliegue pasa `VITE_SITE_URL` con el owner y el repo reales,

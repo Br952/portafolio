@@ -28,7 +28,8 @@ export function Hero() {
             <h1
               id="hero-title"
               data-testid="hero-title"
-              className="mt-6 font-display text-[clamp(2.4rem,6.1vw,4.1rem)] font-bold leading-[1.03] tracking-[-0.035em] text-ink"
+              tabIndex={-1}
+              className="mt-6 font-display text-[clamp(2.4rem,6.1vw,4.1rem)] font-bold leading-[1.03] tracking-[-0.035em] text-ink outline-none"
             >
               {site.headline.lead}{' '}
               <span className="text-gradient">{site.headline.accent}</span>

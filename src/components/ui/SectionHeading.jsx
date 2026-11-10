@@ -10,7 +10,8 @@ export function SectionHeading({ kicker, title, titleId, description, className 
 
       <h2
         id={titleId}
-        className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+        tabIndex={-1}
+        className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink outline-none sm:text-4xl"
       >
         {title}
       </h2>

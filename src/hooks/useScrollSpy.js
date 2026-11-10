@@ -15,7 +15,12 @@ export function useScrollSpy(ids, { offset = 88 } = {}) {
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 
-    if (!sections.length || typeof IntersectionObserver === 'undefined') return;
+    if (!sections.length) {
+      setActiveId(null);
+      return;
+    }
+
+    if (typeof IntersectionObserver === 'undefined') return;
 
     // Se acumulan los ratios de todas las secciones visibles: así el estado
     // activo no depende de qué entrada disparó el callback.

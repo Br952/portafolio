@@ -33,7 +33,8 @@ test.describe('Stack y Proyectos', () => {
 
     const links = page.getByTestId('project-link');
     await expect(links).toHaveCount(3);
-    await expect(links.first()).toHaveAttribute('href', '#contacto');
+    await expect(links.first()).toHaveAttribute('href', '#/proyectos/monitoreo-sismico');
+    await expect(links.first()).toContainText('Ver caso de estudio');
     await expect(links.last()).toHaveAttribute('href', 'https://github.com/Br952');
     await expect(links.last()).toHaveAttribute('target', '_blank');
   });
