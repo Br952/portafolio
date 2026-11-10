@@ -175,8 +175,9 @@ dominio. No hay metadatos duplicados en `index.html` que puedan desfasarse.
 - `src/data/metrics.js` solo contiene cifras medidas y defendibles.
 
 El workflow de despliegue pasa `VITE_SITE_URL` con el owner y el repo reales,
-así que canonical, OG, JSON-LD, sitemap y robots sobreviven a un rename del
-repositorio. En local se usa el valor por defecto de `site.config.js`.
+o con la variable `SITE_URL` si defines un dominio propio. Así canonical, OG,
+JSON-LD, sitemap y robots sobreviven tanto a un rename del repositorio como a
+la migración a dominio propio. En local se usa el valor de `site.config.js`.
 
 ## Contacto
 
@@ -241,9 +242,20 @@ desde cero:
 5. Si el repositorio tiene otro nombre, el workflow calcula solo el `base` y
    la URL de Pages. Actualiza también `url` en `site.config.js` para que el
    desarrollo local y las capturas apunten al dominio correcto.
-6. Para un dominio propio: cambia `url` en `site.config.js`, añade el dominio
-   en **Settings → Pages → Custom domain** y crea `public/CNAME` con el
-   dominio. El resto (canonical, OG, sitemap, robots) se regenera solo.
+6. Para un dominio propio:
+   - crea la variable de repositorio **`SITE_URL`** con tu dominio, por
+     ejemplo `https://brayanrondon.dev`
+     (**Settings → Secrets and variables → Actions → Variables**);
+   - añade el dominio en **Settings → Pages → Custom domain**;
+   - crea `public/CNAME` con el dominio, sin `https://` ni barra final;
+   - cambia `url` en `site.config.js` para que el desarrollo local y las
+     capturas usen el mismo dominio.
+
+   El workflow detecta `SITE_URL`, publica con base `/` y genera canonical,
+   OG, JSON-LD, sitemap y robots con el dominio propio. En DNS, apunta el
+   apex a los A records de GitHub Pages y `www` como CNAME a
+   `br952.github.io`. Si usas Cloudflare, deja esos registros en modo
+   **DNS only** para que GitHub pueda emitir el certificado.
 
 ### Qué valida el CI
 

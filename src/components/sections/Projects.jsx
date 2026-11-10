@@ -26,8 +26,8 @@ function ProjectPreview({ project }) {
         <img
           src={asset(project.image)}
           alt={project.imageAlt ?? ''}
-          width={1200}
-          height={750}
+          width={1280}
+          height={709}
           loading="lazy"
           decoding="async"
           data-testid="project-preview-image"

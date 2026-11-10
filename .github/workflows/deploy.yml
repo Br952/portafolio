@@ -36,11 +36,21 @@ jobs:
 
       - name: Calcular base y URL del sitio
         id: site
+        env:
+          # Variable opcional del repositorio (Settings → Secrets and variables
+          # → Actions → Variables). Si existe, se usa un dominio propio y la
+          # base pasa a "/"; si no, se usa GitHub Pages con subruta.
+          CUSTOM_SITE_URL: ${{ vars.SITE_URL }}
         run: |
           owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           repo="${{ github.event.repository.name }}"
-          echo "base=/$repo/" >> "$GITHUB_OUTPUT"
-          echo "url=https://$owner.github.io/$repo" >> "$GITHUB_OUTPUT"
+          if [ -n "$CUSTOM_SITE_URL" ]; then
+            echo "base=/" >> "$GITHUB_OUTPUT"
+            echo "url=${CUSTOM_SITE_URL%/}" >> "$GITHUB_OUTPUT"
+          else
+            echo "base=/$repo/" >> "$GITHUB_OUTPUT"
+            echo "url=https://$owner.github.io/$repo" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Build para Pages
         run: npm run build
