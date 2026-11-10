@@ -1,0 +1,18 @@
+# Normaliza finales de línea en el repo (Windows incluido).
+* text=auto eol=lf
+
+# Binarios: Git no debe intentar diff ni conversión.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ico binary
+
+# Lockfile y capturas: no inflan el diff en GitHub.
+package-lock.json linguist-generated=true
+docs/screenshots/* linguist-documentation
+docs/brand/* linguist-documentation

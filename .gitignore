@@ -1,0 +1,29 @@
+node_modules/
+dist/
+dist-ssr/
+.vite/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Entorno
+.env
+.env.*
+!.env.example
+
+# Editores y sistema
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Referencia local del sitio anterior; no se publica en el repo.
+_legacy/
